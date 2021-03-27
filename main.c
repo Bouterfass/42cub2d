@@ -5,36 +5,47 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "getnextline/get_next_line.h"
+#include "cub3d.h"
 
-int main(int argc, char const *argv[])
+/*
+	- récup la ligne
+	- la trim 
+	- réduire tout les espaces à 1
+	- stocker
+*/
+
+
+
+
+int main(int ac, char **av)
 {
 	int fd = 0;
 	char *line = NULL;
+	int i = 0;
 	int endl = 1;
-	int i = 1;
+	t_mapinfo *map;
 
-
-	if (argc > 1)
+	map = (t_mapinfo *)malloczero(sizeof(t_mapinfo));
+	if (ac > 1)
 	{
-		while (i < argc)
-		{
-			fd = open(argv[1], O_RDONLY);
-			endl = 1;
+		init_mapinfo(map);
+		while (i < ac)
+		{	
+			fd = open(av[1], O_RDONLY);
 			while (endl > 0)
 			{
 				endl = get_next_line(fd, &line);
-				if (endl >= 0)
-				{
-					printf("endl: %i | %s\n",endl, line);
-					free(line);
-					line = NULL;
-				}
-				else
-					printf("endl: %i\n", endl);
+				if (empty_line(line) != 1)
+					getinfo(line, map);
+				
+				free(line);
+				line = NULL;
 			}
-			close(fd);
 			i++;
+			close(fd);
 		}
 	}
+
 	return (0);
 }
+
