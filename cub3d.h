@@ -20,6 +20,8 @@ typedef struct s_mapinfo
     int  ceilingcol[3];   
     char **map;
 
+    char *file;
+
 } t_mapinfo;
 
 
@@ -38,5 +40,8 @@ void    getsprite(const char *str, t_mapinfo *map);
 void    getfloorcol(const char *str, t_mapinfo *map);
 void    getceilingcol(const char *str, t_mapinfo *map);
 void    getmap(const char *str, t_mapinfo *map);
+void    getinfo(int fd, const char *line, t_mapinfo *map);
+
+void    print_map(const char **map);
 
 #endif 

@@ -18,4 +18,6 @@ void    init_mapinfo(t_mapinfo *map)
     map->ceilingcol[1] = -1;
     map->ceilingcol[2] = -1;
     map->map = NULL;
+
+    map->file = NULL;
 }
