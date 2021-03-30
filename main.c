@@ -10,7 +10,6 @@
 
 int main(int ac, char **av)
 {
-	int fd = 0;
 	char *line = NULL;
 	int endl = 1;
 	t_mapinfo *map;
@@ -20,16 +19,52 @@ int main(int ac, char **av)
 	{
 		init_mapinfo(map);
 		map->file = av[1];
-		fd = open(map->file, O_RDONLY);
+		map->fd = open(map->file, O_RDONLY);
 		while (endl > 0)
 		{
-			endl = get_next_line(fd, &line);
-			empty_line(line) != 1 ? getinfo(fd, line, map) : 0;		
+			endl = get_next_line(map->fd, &line);
+			empty_line(line) != 1 ? getinfo(line, map) : 0;		
 			free(line);
 			line = NULL;
-		}	
-		close(fd);	
+		}
+		print_map(map->map);
+		close(map->fd);	
 	}
 	return (0);
 }
 
+
+
+/*
+int main(int ac, char const *av[])
+{
+	int fd = 0;
+	char *line = NULL;
+	int endl = 1;
+	int i = 1;
+
+
+	if (ac > 1)
+	{
+		while (i < ac)
+		{
+			fd = open(av[1], O_RDONLY);
+			endl = 1;
+			while (endl > 0)
+			{
+				endl = get_next_line(fd, &line);
+				if (endl >= 0)
+				{
+					printf("endl: %i | %s\n",endl, line);
+					free(line);
+					line = NULL;
+				}
+				else
+					printf("endl: %i\n", endl);
+			}
+			close(fd);
+			i++;
+		}
+	}
+	return (0);
+}*/

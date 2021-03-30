@@ -7,10 +7,9 @@ int     is_mapline(const char *str)
     int i;
 
     i = 0;
-
-    if (empty_line(str) == 1)
+    if (empty_line(str) == 1 || !str)
         return (0);
-    while (str[i]){
+    while (str[i] != '\0'){
         if (str[i] != '0' && str[i] != '1' && str[i] != ' '
             && str[i] != '2' && str[i] != 'N'
             && str[i] != 'S' && str[i] != 'E'
@@ -21,65 +20,72 @@ int     is_mapline(const char *str)
     return (1);
 }
 
-void    fill_map(char **map, int fd, int x, int y)
+
+void    malloc_map(int x, int y, t_mapinfo *m)
+{
+    int i;
+
+    i = 0;
+    m->map = malloc((sizeof(char *) * y) + 1);
+    while (i < y)
+    {
+        m->map[i] = malloc((sizeof(char) * x));
+        i++;
+    }
+   // m->map[y] = '\0';
+}
+
+
+void    fill_map(int x, int y, t_mapinfo *m)
 {
     char *line;
     int i;
     int j;
-
+    int endl = 1;
     i = 0;
     j = 0;
     line = NULL;
-
-    while (get_next_line(fd, &line))
-    {
-        while (is_mapline(line))
-        {
-            while (i < y)
+    m->fd = open(m->file, O_RDONLY);
+    malloc_map(x, y, m);
+    printf("\nmap\n");
+    while (endl > 0 || i < y)
+    {  
+        endl = get_next_line(m->fd, &line);
+        if (is_mapline(line))
+        {  
+            while (j < ft_strlen(line))
             {
-                while (j < x)
-                {
-                    map[i][j] = line[j];
-                    j++;
-                //   fill_line(map[i], ft_strlen(*map[i], j));
-                }
-                map[i][j] = '\0';
-                i++;
-                j = 0;
+                m->map[i][j] = line[j];
+                printf("%c ", m->map[i][j]);
+                j++;
             }
+            printf("\n");
+            //m->map[i][j] = '\0';
+            i++;
+            j = 0;
         }
+        free(line);
+        line = NULL;
     }
+    close(m->fd);
 }
 
-void    malloc_map(char **map, int x, int y, int fd)
-{
-    int i;
-
-    i = 0;
-    map = (char **)malloc((sizeof(char *) * y) + 1);
-    while (i++ < y)
-        map[i] = (char *)malloc((sizeof(char *) * x) + 1);
-    fill_map(map, fd, x, y);
-
-}
-
-
-void    getmapsize(int fd, const char *l, t_mapinfo *map)
+void    getmapsize(const char *l, t_mapinfo *map)
 {
     int x;
     int y;
     char *line;
+    int endl;
 
     x = 0;
-    y = 0;
+    y = 1;
+    endl = 1;
     line = NULL;
     if (is_mapline(l))
-    {
         ft_strlen(l) > x ? x = ft_strlen(l) : 0;
-        y++;
-    }
-    while(get_next_line(fd, &line) > 0)
+    while(endl > 0)
     {
+        endl = get_next_line(map->fd, &line);
         if (is_mapline(line))
         {
             ft_strlen(line) > x ? x = ft_strlen(line) : 0;
@@ -88,16 +94,14 @@ void    getmapsize(int fd, const char *l, t_mapinfo *map)
         free(line);
         line = NULL;
     }
-    close(fd);
-    printf("\n[%d, %d]\n", x , y);
-    malloc_map(map->map, x, y, fd);
+    fill_map(x, y, map);
 }
 
 
 
 
 
-void getinfo(int fd, const char *line, t_mapinfo *map)
+void getinfo(const char *line, t_mapinfo *map)
 {
    /* char *str;
 
@@ -121,9 +125,9 @@ void getinfo(int fd, const char *line, t_mapinfo *map)
     else */
     
     if (is_mapline(line))
-        getmapsize(fd, line, map);
+        getmapsize(line, map);
     else 
-        printf("\nError\nCan't identify this information:\n\"%s\".", line);
+        printf("\nError. Can't identify this information:\n\"%s\".", line);
 }
 
 

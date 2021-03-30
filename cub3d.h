@@ -9,19 +9,19 @@
 
 typedef struct s_mapinfo
 {
-    int rx;
-    int ry;
-    char *notext;
-    char *sotext;
-    char *wetext;
-    char *eatext;
-    char *sprite;
-    int  floorcol[3];
-    int  ceilingcol[3];   
-    char **map;
+    int     rx;
+    int     ry;
+    char    *notext;
+    char    *sotext;
+    char    *wetext;
+    char    *eatext;
+    char    *sprite;
+    int     floorcol[3];
+    int     ceilingcol[3];   
+    char    **map;
 
-    char *file;
-
+    char    *file;
+    int     fd;
 } t_mapinfo;
 
 
@@ -40,8 +40,8 @@ void    getsprite(const char *str, t_mapinfo *map);
 void    getfloorcol(const char *str, t_mapinfo *map);
 void    getceilingcol(const char *str, t_mapinfo *map);
 void    getmap(const char *str, t_mapinfo *map);
-void    getinfo(int fd, const char *line, t_mapinfo *map);
+void    getinfo(const char *line, t_mapinfo *map);
 
-void    print_map(const char **map);
+void    print_map(char **map);
 
 #endif 

@@ -51,6 +51,8 @@ int		empty_line(const char *str)
 	int i; 
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (white_space(str[i]) == 0)

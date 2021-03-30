@@ -20,4 +20,5 @@ void    init_mapinfo(t_mapinfo *map)
     map->map = NULL;
 
     map->file = NULL;
+    map->fd = 0;
 }
