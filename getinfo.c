@@ -47,7 +47,7 @@ void    fill_map(int x, int y, t_mapinfo *m)
     line = NULL;
     m->fd = open(m->file, O_RDONLY);
     malloc_map(x, y, m);
-    printf("\nmap\n");
+
     while (endl > 0 || i < y)
     {  
         endl = get_next_line(m->fd, &line);
@@ -56,10 +56,9 @@ void    fill_map(int x, int y, t_mapinfo *m)
             while (j < ft_strlen(line))
             {
                 m->map[i][j] = line[j];
-                printf("%c ", m->map[i][j]);
+                //printf("%c ", m->map[i][j]);
                 j++;
             }
-            printf("\n");
             //m->map[i][j] = '\0';
             i++;
             j = 0;
@@ -72,62 +71,57 @@ void    fill_map(int x, int y, t_mapinfo *m)
 
 void    getmapsize(const char *l, t_mapinfo *map)
 {
-    int x;
-    int y;
     char *line;
     int endl;
 
-    x = 0;
-    y = 1;
     endl = 1;
     line = NULL;
     if (is_mapline(l))
-        ft_strlen(l) > x ? x = ft_strlen(l) : 0;
+        ft_strlen(l) > map->mapx ? map->mapx = ft_strlen(l) : 0;
     while(endl > 0)
     {
         endl = get_next_line(map->fd, &line);
         if (is_mapline(line))
         {
-            ft_strlen(line) > x ? x = ft_strlen(line) : 0;
-            y++;
+            ft_strlen(line) > map->mapx ? map->mapx = ft_strlen(line) : 0;
+            map->mapy++;
         }
         free(line);
         line = NULL;
     }
-    fill_map(x, y, map);
+    fill_map(map->mapx, map->mapy, map);
 }
 
 
 
 
 
-void getinfo(const char *line, t_mapinfo *map)
+int getinfo(const char *line, t_mapinfo *map)
 {
-   /* char *str;
+    char *str;
 
     str = trimstr(line, " ");
     if (str[0] == 'R')
-        getresolution(str, map);
+        map->errmap[0] = getresolution(str, map);
     else if (str[0] == 'N' && str[1] == 'O')
-        getnotext(str, map);
+        map->errmap[1] = getnotext(str, map);
     else if (str[0] == 'S' && str[1] == 'O')
-        getsotext(str, map);
+        map->errmap[2] = getsotext(str, map);
     else if (str[0] == 'W' && str[1] == 'E')
-        getwetext(str, map);
+        map->errmap[3] = getwetext(str, map);
     else if (str[0] == 'E' && str[1] == 'A')
-        geteatext(str, map);
+        map->errmap[4] = geteatext(str, map);
     else if (str[0] == 'S' && str[1] == ' ')
-        getsprite(str, map);
+        map->errmap[5] = getsprite(str, map);
     else if (str[0] == 'F')
-        getfloorcol(str, map);
+        map->errmap[6] = getfloorcol(str, map);
     else if (str[0] == 'C')
-        getceilingcol(str, map);
-    else */
-    
-    if (is_mapline(line))
+        map->errmap[7] = getceilingcol(str, map);
+    else if (is_mapline(line))
         getmapsize(line, map);
-    else 
-        printf("\nError. Can't identify this information:\n\"%s\".", line);
+    //map->errmap[8] = check_map(map);
+    return (0);
+
 }
 
 

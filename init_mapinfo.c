@@ -4,6 +4,9 @@
 
 void    init_mapinfo(t_mapinfo *map)
 {
+    int i;
+
+    i = 0;
     map->rx = 0;
     map->ry = 0;
     map->notext = NULL;
@@ -18,7 +21,10 @@ void    init_mapinfo(t_mapinfo *map)
     map->ceilingcol[1] = -1;
     map->ceilingcol[2] = -1;
     map->map = NULL;
-
+    while (map->errmap[i++])
+        map->errmap[i] = 0;
     map->file = NULL;
     map->fd = 0;
+    map->mapx = 0;
+    map->mapy = 1;
 }

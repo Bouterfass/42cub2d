@@ -23,11 +23,12 @@ int main(int ac, char **av)
 		while (endl > 0)
 		{
 			endl = get_next_line(map->fd, &line);
-			empty_line(line) != 1 ? getinfo(line, map) : 0;		
+			if (empty_line(line) != 1 && line != NULL) 
+				getinfo(line, map);		
 			free(line);
 			line = NULL;
 		}
-		print_map(map->map);
+		print_mapinfo(map);
 		close(map->fd);	
 	}
 	return (0);
