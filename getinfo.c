@@ -32,36 +32,43 @@ void    malloc_map(int x, int y, t_mapinfo *m)
         m->map[i] = malloc((sizeof(char) * x));
         i++;
     }
-   // m->map[y] = '\0';
 }
 
+void fill_line(t_mapinfo *map, char *line, int len, int i)
+{
+    int j; 
+
+    j = 0;
+    while (j < map->mapx)
+    { 
+    if (j < len)
+        map->map[i][j] = line[j];
+    else
+        map->map[i][j] = ' ';
+    j++;
+    }
+}
 
 void    fill_map(int x, int y, t_mapinfo *m)
 {
     char *line;
     int i;
-    int j;
-    int endl = 1;
+
+    int endl;
+    
+    endl = 1;
     i = 0;
-    j = 0;
+
     line = NULL;
     m->fd = open(m->file, O_RDONLY);
     malloc_map(x, y, m);
-
     while (endl > 0 || i < y)
     {  
         endl = get_next_line(m->fd, &line);
         if (is_mapline(line))
         {  
-            while (j < ft_strlen(line))
-            {
-                m->map[i][j] = line[j];
-                //printf("%c ", m->map[i][j]);
-                j++;
-            }
-            //m->map[i][j] = '\0';
+            fill_line(m, line, ft_strlen(line), i);
             i++;
-            j = 0;
         }
         free(line);
         line = NULL;
@@ -118,10 +125,11 @@ int getinfo(const char *line, t_mapinfo *map)
     else if (str[0] == 'C')
         map->errmap[7] = getceilingcol(str, map);
     else if (is_mapline(line))
+    {
         getmapsize(line, map);
-    //map->errmap[8] = check_map(map);
+        map->errmap[8] = check_map(map);
+    }
     return (0);
-
 }
 
 
