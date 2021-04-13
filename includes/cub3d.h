@@ -8,6 +8,18 @@
 # include "raycasting.h"
 # include "get_next_line.h"
 # include "mlx.h"
+# include "mlx_int.h"
+
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
+# define ZZZ 122
+# define SSS 115
+# define QQQ 113
+# define DDD 100
+# define ESC 65307
+
 
 typedef struct s_mapinfo
 {
@@ -28,6 +40,21 @@ typedef struct s_mapinfo
     int     fd;
 } t_mapinfo;
 
+typedef struct s_game
+{
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+
+    void        *mlx;
+    void        *mlx_win;
+    t_player    *player;
+    t_mapinfo   *map;
+    t_screen    *scr;
+
+} t_game;
 
 void    *malloczero(size_t size);
 int     ft_strlen(const char *s);
@@ -56,6 +83,11 @@ int     isolated_space(t_mapinfo *map, int x, int y);
 int     is_nseo(char c);
 int     count_nseo(t_mapinfo *map);
 int     count_zero(t_mapinfo *map);
-int     retrieve_info(int ac, char **av, t_mapinfo *map);
+void     retrieve_info(int ac, char **av, t_mapinfo *map);
+void    init_screen(t_screen *scr);
+void    my_mlx_pixel_put(t_game *g, int x, int y, int color);
+void    display_map(t_game *g);
+void    display_grid(t_game *g);
+void    draw_player(int x, int y, int color, t_game *g);
 
 #endif 

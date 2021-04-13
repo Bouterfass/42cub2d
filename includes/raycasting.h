@@ -6,13 +6,19 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-
-
-typedef struct s_mlx
+typedef struct s_sreen
 {
-    void *mlx;
-    void *win;
-} t_mlx;
+    int scaleX;
+    int scaleY;
+} t_screen;
+
+
+typedef struct s_player
+{
+    int x;
+    int y;
+} t_player;
+
 
 
 

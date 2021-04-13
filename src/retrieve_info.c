@@ -1,11 +1,12 @@
 #include "../includes/cub3d.h"
 
-int retrieve_info(int ac, char **av, t_mapinfo *map)
+void retrieve_info(int ac, char **av, t_mapinfo *map)
 {
-	char *line = NULL;
-	int endl = 1;
+	char *line;
+	int endl;
 
-	
+	line = NULL;
+	endl = 1;
 	if (ac > 1)
 	{
 		init_mapinfo(map);
@@ -22,7 +23,6 @@ int retrieve_info(int ac, char **av, t_mapinfo *map)
 		//print_mapinfo(map);
 		close(map->fd);	
 	}
-	return (0);
 }
 
 
