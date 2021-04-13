@@ -16,7 +16,7 @@ void        draw_wall(int x, int y, int color, t_game *g)
         {
             tmpy = (i + y);
             tmpx = (j + x);
-            my_mlx_pixel_put(g, tmpy, tmpx, color);
+            g->data[tmpx * g->map->rx + tmpy] = color;
             j++;
         }
         i++;
@@ -39,7 +39,7 @@ void             display_grid_ver(int ver, t_game *g)
             
             while (j < g->map->ry)
             {
-                my_mlx_pixel_put(g, i, j, 0x00FFFFFF);
+                g->data[j * g->map->rx + i] = 0x00FFFFFF;
                 j++;
             }
         j = 0;
@@ -61,7 +61,7 @@ void             display_grid_hor(int hor, t_game *g)
         {
             while (i < g->map->rx)
             {
-                my_mlx_pixel_put(g, i, j, 0x00FFFFFF);
+                g->data[j * g->map->rx + i] = 0x00FFFFFF;
                 i++;
             }
         j += hor;
@@ -89,8 +89,11 @@ void        display_map(t_game *g)
                 draw_wall(i * g->scr->scaleX, j * g->scr->scaleY, 0x00c6e2ff, g);
             if (g->map->map[i][j] == 'N')
             {
+                g->player = (t_player*)malloczero(sizeof(t_player));
+                g->player->x = i * g->scr->scaleX;
+                g->player->y = j * g->scr->scaleY;
                 draw_wall(i * g->scr->scaleX, j * g->scr->scaleY, 0x00c6e2ff, g);
-                draw_player(i * g->scr->scaleX, j * g->scr->scaleY, 0x00349721, g);
+                draw_player(g->player->x, g->player->y, 0x00349721, g);
             }
             j++;
         }
@@ -104,7 +107,6 @@ void            display_grid(t_game *g)
     int scale;
     int ver;
     int hor;
-   
     
     g->scr = (t_screen *)malloczero(sizeof(t_screen));
     if (g->map->mapx > g->map->mapy)
@@ -117,14 +119,17 @@ void            display_grid(t_game *g)
         ver = hor;
     else 
         hor = ver;
+ 
     g->scr->scaleX = ver;
     g->scr->scaleY = hor;
-    
 
-    printf("scale = %d\n", scale);
+ 
     display_map(g);
+
     display_grid_hor(hor, g);
+
     display_grid_ver(ver, g);
+    printf("iiiiiiiiiiiiiii\n");
 }
 
 

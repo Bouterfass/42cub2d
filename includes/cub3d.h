@@ -8,7 +8,7 @@
 # include "raycasting.h"
 # include "get_next_line.h"
 # include "mlx.h"
-# include "mlx_int.h"
+//# include "mlx_int.h"
 
 # define UP 65362
 # define DOWN 65364
@@ -40,15 +40,28 @@ typedef struct s_mapinfo
     int     fd;
 } t_mapinfo;
 
+/*
+typedef struct	s_img
+{
+	void		*img_ptr;
+	int	    *data; 
+	int			size_l;
+	int			bpp;
+	int			endian;
+}				t_img;
+*/
+
 typedef struct s_game
 {
-    void        *img;
-    char        *addr;
-    int         bits_per_pixel;
-    int         line_length;
-    int         endian;
+    void		*img_ptr;
+	int	        *data; 
+	int			size_l;
+	int			bpp;
+	int			endian;
+    void		*img_ptr2;
+	int	        *data2; 
 
-    void        *mlx;
+    void        *mlx_ptr;
     void        *mlx_win;
     t_player    *player;
     t_mapinfo   *map;
@@ -89,5 +102,6 @@ void    my_mlx_pixel_put(t_game *g, int x, int y, int color);
 void    display_map(t_game *g);
 void    display_grid(t_game *g);
 void    draw_player(int x, int y, int color, t_game *g);
+void    malloc_game(t_game *g);
 
 #endif 
