@@ -17,7 +17,7 @@ void draw_player(int x, int y, int color, t_game *g)
         {
             tmpy = (i + g->player->y);
             tmpx = (j + g->player->x);
-            g->data[tmpy * g->map->rx + tmpx] = 0x00FF0000;
+            g->data[tmpx * g->map->rx + tmpy] = 0x000B329F;
             j++;
         }
         i++;

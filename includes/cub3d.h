@@ -10,16 +10,17 @@
 # include "mlx.h"
 //# include "mlx_int.h"
 
-# define UP 65362
-# define DOWN 65364
-# define LEFT 65361
-# define RIGHT 65363
-# define ZZZ 122
-# define SSS 115
-# define QQQ 113
-# define DDD 100
-# define ESC 65307
+# define ROTATE_LEFT	65361
+# define ROTATE_RIGHT	65363
+# define FORWARD_W_Z	119
+# define BACK_S_S		115
+# define RIGHT_D_D		100
+# define LEFT_A_Q		97
 
+
+# define RED            0x00ff4040
+# define WHITE          0x00c6e2ff
+# define BLUE           0x000B329F
 
 typedef struct s_mapinfo
 {
@@ -40,16 +41,6 @@ typedef struct s_mapinfo
     int     fd;
 } t_mapinfo;
 
-/*
-typedef struct	s_img
-{
-	void		*img_ptr;
-	int	    *data; 
-	int			size_l;
-	int			bpp;
-	int			endian;
-}				t_img;
-*/
 
 typedef struct s_game
 {
