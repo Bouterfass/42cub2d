@@ -7,21 +7,24 @@ void draw_player(int x, int y, int color, t_game *g)
     int tmpx;
     int tmpy;
 
-    i = 0;
-    j = 0;
+    i = -8;
+    j = -8;
 
    
-    while (i < g->scr->scaleX / 2)
+    while (i < 8)
     {
-        while (j < g->scr->scaleY / 2)
+        while (j < 16)
         {
-            tmpy = (i + g->player->y);
-            tmpx = (j + g->player->x);
-            g->data[tmpx * g->map->rx + tmpy] = 0x000B329F;
+            tmpy = (g->player->y);
+            tmpx =  (g->player->x);
+    
+            g->data[(tmpx + i) * g->map->rx + (tmpy + j)] = 0x000B329F;
             j++;
         }
         i++;
         j = 0;
     }
+
+    
 }
 

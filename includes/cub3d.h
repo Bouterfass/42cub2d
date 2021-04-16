@@ -8,19 +8,22 @@
 # include "raycasting.h"
 # include "get_next_line.h"
 # include "mlx.h"
+# include <math.h>
 //# include "mlx_int.h"
 
-# define ROTATE_LEFT	65361
-# define ROTATE_RIGHT	65363
-# define FORWARD_W_Z	119
-# define BACK_S_S		115
-# define RIGHT_D_D		100
-# define LEFT_A_Q		97
+# define R_LEFT	        65361
+# define R_RIGHT	    65363
+# define FORWARD_Z	    122
+# define BACK_S		    115
+# define RIGHT_D		100
+# define LEFT_Q		    113
 
 
 # define RED            0x00ff4040
 # define WHITE          0x00c6e2ff
 # define BLUE           0x000B329F
+# define PI             3.141592653589793
+# define RSPEED         0.00001
 
 typedef struct s_mapinfo
 {
@@ -58,6 +61,20 @@ typedef struct s_game
     t_mapinfo   *map;
     t_screen    *scr;
 
+    int         forward;
+    int         back;
+    int         right;
+    int         left;
+    int         r_right;
+    int         r_left;
+
+    double      dirx; 
+    double      diry;
+    double      planx;
+    double      plany;
+    double      rayx;
+    double      rayy;  
+
 } t_game;
 
 void    *malloczero(size_t size);
@@ -94,5 +111,10 @@ void    display_map(t_game *g);
 void    display_grid(t_game *g);
 void    draw_player(int x, int y, int color, t_game *g);
 void    malloc_game(t_game *g);
+void    get_player_start(t_game *g);
+void    get_scale(t_game *g);
+void    draw_dir(t_game *g);
+void    draw_plan(t_game* g);
+void    draw_rays(t_game *g);
 
 #endif 

@@ -85,16 +85,16 @@ void        display_map(t_game *g)
         {
             if (g->map->map[i][j] == '1')
                 draw_wall(i * g->scr->scaleX, j * g->scr->scaleY, 0x00ff4040, g);
-            if (g->map->map[i][j] == '0')
+            if (g->map->map[i][j] == '0' || is_nseo(g->map->map[i][j]))
                 draw_wall(i * g->scr->scaleX, j * g->scr->scaleY, 0x00c6e2ff, g);
-            if (g->map->map[i][j] == 'N')
+           /* if (g->map->map[i][j] == 'N')
             {
                 g->player = (t_player*)malloczero(sizeof(t_player));
                 g->player->x = i * g->scr->scaleX;
                 g->player->y = j * g->scr->scaleY;
                 draw_wall(i * g->scr->scaleX, j * g->scr->scaleY, 0x00c6e2ff, g);
                 draw_player(g->player->x, g->player->y, 0x00349721, g);
-            }
+            }*/
             j++;
         }
         i++;
@@ -104,32 +104,14 @@ void        display_map(t_game *g)
 
 void            display_grid(t_game *g)
 {
-    int scale;
-    int ver;
-    int hor;
-    
-    g->scr = (t_screen *)malloczero(sizeof(t_screen));
-    if (g->map->mapx > g->map->mapy)
-        scale = g->map->mapx;
-    else
-        scale = g->map->mapy;
-    ver = g->map->rx / scale;
-    hor = g->map->ry / scale;
-    if (ver > hor)
-        ver = hor;
-    else 
-        hor = ver;
- 
-    g->scr->scaleX = ver;
-    g->scr->scaleY = hor;
+    get_scale(g);
 
- 
     display_map(g);
 
-    display_grid_hor(hor, g);
+    display_grid_hor(g->scr->scaleY, g);
 
-    display_grid_ver(ver, g);
-    printf("iiiiiiiiiiiiiii\n");
+    display_grid_ver(g->scr->scaleX, g);
+ 
 }
 
 

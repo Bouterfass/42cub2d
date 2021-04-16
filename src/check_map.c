@@ -59,7 +59,7 @@ int check_col(t_mapinfo *map, int x, int y)
 int is_nseo(char c)
 {
     if (c == 'N' || c == 'S'
-        || c == 'E' || c == 'O')
+        || c == 'E' || c == 'W')
         return (1);
     return (0);
 }

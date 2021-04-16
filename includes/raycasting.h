@@ -15,8 +15,8 @@ typedef struct s_sreen
 
 typedef struct s_player
 {
-    int x;
-    int y;
+    double x;
+    double y;
 } t_player;
 
 
