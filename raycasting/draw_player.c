@@ -7,13 +7,13 @@ void draw_player(int x, int y, int color, t_game *g)
     int tmpx;
     int tmpy;
 
-    i = -8;
-    j = -8;
+    i = -g->scr->scaleX/4;
+    j = -g->scr->scaleX/2;
 
    
-    while (i < 8)
+    while (i < g->scr->scaleX/4)
     {
-        while (j < 16)
+        while (j < g->scr->scaleX/2)
         {
             tmpy = (g->player->y);
             tmpx =  (g->player->x);

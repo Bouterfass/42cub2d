@@ -17,13 +17,14 @@
 # define BACK_S		    115
 # define RIGHT_D		100
 # define LEFT_Q		    113
+# define RAD            0.0174532925
 
 
 # define RED            0x00ff4040
 # define WHITE          0x00c6e2ff
 # define BLUE           0x000B329F
 # define PI             3.141592653589793
-# define RSPEED         0.00001
+# define RSPEED         0.009817477042
 
 typedef struct s_mapinfo
 {
@@ -74,6 +75,9 @@ typedef struct s_game
     double      plany;
     double      rayx;
     double      rayy;  
+
+    double a;
+    double b;
 
 } t_game;
 

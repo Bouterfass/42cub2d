@@ -179,23 +179,24 @@ void ft_forward_back(t_game *g)
 
 void ft_right_left(t_game *g)
 {
-   double olddirx = g->dirx;
+    double olddirx = g->dirx;
     double oldplanx = g->planx;
+   
    if (g->right == 1)
    {   
-        g->dirx = cos(-PI/32)*g->dirx - sin(-PI/32)*g->diry;
-        g->diry = olddirx * sin(-PI/32) + g->diry*cos(-PI/32);
-        g->planx = cos(-PI/32)*g->planx - sin(-PI/32)*g->plany;
-        g->plany = oldplanx * sin(-PI/32) + g->plany*cos(-PI/32);
+        g->dirx = cos(-RSPEED)*g->dirx - sin(-RSPEED)*g->diry;
+        g->diry = olddirx * sin(-RSPEED) + g->diry*cos(-RSPEED);
+        g->planx = cos(-RSPEED)*g->planx - sin(-RSPEED)*g->plany;
+        g->plany = oldplanx * sin(-RSPEED) + g->plany*cos(-RSPEED);
       
    }
 
     if (g->left == 1)
    {   
-        g->dirx = cos(PI/32)*g->dirx - sin(PI/32)*g->diry;
-        g->diry = olddirx * sin(PI/32) + g->diry*cos(PI/32);
-        g->planx = cos(PI/32)*g->planx - sin(PI/32)*g->plany;
-        g->plany = oldplanx * sin(PI/32) + g->plany*cos(PI/32);
+        g->dirx = cos(RSPEED)*g->dirx - sin(RSPEED)*g->diry;
+        g->diry = olddirx * sin(RSPEED) + g->diry*cos(RSPEED);
+        g->planx = cos(RSPEED)*g->planx - sin(RSPEED)*g->plany;
+        g->plany = oldplanx * sin(RSPEED) + g->plany*cos(RSPEED);
       
    }
    /*if (g->left == 1)
@@ -210,11 +211,11 @@ void ft_right_left(t_game *g)
 int ft_raycasting(t_game *g)
 {
     display_grid(g);
-    draw_player(g->player->x, g->player->y, 0x00349721, g);
      //printf("blabla");
+    draw_rays(g);
+    draw_player(g->player->x, g->player->y, 0x00349721, g);
     draw_dir(g);
     draw_plan(g);
-    draw_rays(g);
     mlx_put_image_to_window(g->mlx_ptr, g->mlx_win,
 			g->img_ptr, 0, 0);
     ft_forward_back(g);
